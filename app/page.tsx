@@ -1,7 +1,10 @@
 import DataTable from "@/components/DataTable"
 import Image from "next/image"
 
-const page = () => {
+const page = async () => {
+  const coin = await fetcher<CoinDetailsData>('/coins/bitocin',{
+    dex_pair_format: 'symbol'
+  })
   return (
     <main className="main-container">
       <section className="home-grid">
@@ -18,7 +21,9 @@ const page = () => {
         </div>
 
         <p>Trending Coins</p>
-        <DataTable />
+        <DataTable columns={[]} data={[]} rowKey={function (row: unknown, index: number): React.Key {
+          throw new Error("Function not implemented.")
+        } } />
       </section>
 
       <section className="w-full mt-7 space-y-4">
