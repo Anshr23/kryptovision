@@ -1,36 +1,33 @@
-import DataTable from "@/components/DataTable"
-import Image from "next/image"
+import React, { Suspense } from 'react';
+import CoinOverview from '@/components/home/CoinOverview';
+import TrendingCoins from '@/components/home/TrendingCoins';
+import {
+  CategoriesFallback,
+  CoinOverviewFallback,
+  TrendingCoinsFallback,
+} from '@/components/home/fallback';
+import Categories from '@/components/home/Categories';
 
-const page = async () => {
-  const coin = await fetcher<CoinDetailsData>('/coins/bitocin',{
-    dex_pair_format: 'symbol'
-  })
+const Page = async () => {
   return (
     <main className="main-container">
       <section className="home-grid">
-        <div className="coin-overview">
-          <div className="header pt-2">
-            <Image src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" 
-            width={56} height={56} alt="Bitcoin's Logo" />
+        <Suspense fallback={<CoinOverviewFallback />}>
+          <CoinOverview />
+        </Suspense>
 
-            <div className="info">
-              <p>Bitcoin / BTC</p>
-              <h1>$81,534.55</h1>
-            </div>
-          </div>
-        </div>
-
-        <p>Trending Coins</p>
-        <DataTable columns={[]} data={[]} rowKey={function (row: unknown, index: number): React.Key {
-          throw new Error("Function not implemented.")
-        } } />
+        <Suspense fallback={<TrendingCoinsFallback />}>
+          <TrendingCoins />
+        </Suspense>
       </section>
 
       <section className="w-full mt-7 space-y-4">
-        <p>Categories</p>
+        <Suspense fallback={<CategoriesFallback />}>
+          <Categories />
+        </Suspense>
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
