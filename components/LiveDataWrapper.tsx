@@ -2,7 +2,7 @@
 
 import { Separator } from '@/components/ui/separator';
 import CandlestickChart from '@/components/CandlestickChart';
-import { useCoinGeckoWebSocket } from '@/hooks/useCoinGeckoWebSocket';
+import { useCoinGeckoWebSocket } from '@/components/hooks/useCoinGeckoWebSocket';
 import DataTable from '@/components/DataTable';
 import { formatCurrency, timeAgo } from '@/lib/utils';
 import { useState } from 'react';

@@ -9,6 +9,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { SearchModal } from '@/components/SearchModel'
 
 
 const Header = () => {
@@ -29,7 +30,7 @@ const Header = () => {
           })}>
           Home</Link>
 
-          <p>search model</p>
+          <SearchModal initialTrendingCoins={[]} />
 
           <Link href="/coins" className={cn('nav-link', {
             'is-active': pathname === '/coins',

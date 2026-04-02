@@ -13,17 +13,22 @@ export async function fetcher<T>(
   params?: QueryParams,
   revalidate = 60,
 ): Promise<T> {
+  const cleanBaseUrl = (BASE_URL || '').replace(/\/$/, '');
+  const cleanEndpoint = endpoint.replace(/^\//, '');
+
   const url = qs.stringifyUrl(
     {
-      url: `${BASE_URL}/${endpoint}`,
+      url: `${cleanBaseUrl}/${cleanEndpoint}`,
       query: params,
     },
     { skipEmptyString: true, skipNull: true },
   );
 
+  const headerKey = cleanBaseUrl.includes('pro-api') ? 'x-cg-pro-api-key' : 'x-cg-demo-api-key';
+
   const response = await fetch(url, {
     headers: {
-      'x-cg-demo-api-key': API_KEY,
+      [headerKey]: API_KEY,
       'Content-Type': 'application/json',
     } as Record<string, string>,
     next: { revalidate },
@@ -69,5 +74,19 @@ export async function getPools(
     return poolData.data?.[0] ?? fallback;
   } catch {
     return fallback;
+  }
+}
+
+export async function searchCoins(query: string): Promise<SearchCoin[]> {
+  const data = await fetcher<{ coins: SearchCoin[] }>('/search', { query });
+  return data.coins ?? [];
+}
+
+export async function getTrendingCoins(): Promise<TrendingCoin[]> {
+  try {
+    const data = await fetcher<{ coins: TrendingCoin[] }>('/search/trending', undefined, 300);
+    return data.coins ?? [];
+  } catch {
+    return [];
   }
 }
