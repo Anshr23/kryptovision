@@ -1,6 +1,6 @@
-# CoinPulse ⚡ — Crypto Screener & Real-Time Trading Terminal
+# KryptoVision 👁️⚡ — Crypto Screener & Real-Time Trading Terminal
 
-**CoinPulse** is a high-frequency cryptocurrency screening app and live market terminal built with Next.js 15 (App Router), React 19, TypeScript, TailwindCSS, and Lightweight-Charts. It features interactive technical candlestick charts, instant token search, currency conversion, and real-time live price and order book streaming.
+**KryptoVision** is a high-frequency cryptocurrency screening application and live market terminal built with Next.js 15 (App Router), React 19, TypeScript, TailwindCSS, and Lightweight-Charts. It features interactive technical candlestick charts, instant token search, currency conversion, and real-time live price and order book streaming.
 
 ---
 
@@ -64,7 +64,7 @@ The recommended platform to deploy Next.js applications is **Vercel** (the creat
 
 1. **Push your code to GitHub / GitLab / Bitbucket**.
 2. Go to [Vercel](https://vercel.com) and click **Add New Project**.
-3. Import your `Crypto-Trading` repository.
+3. Import your `kryptovision` repository.
 4. In the **Environment Variables** section, add:
    - `COINGECKO_BASE_URL` = `https://api.coingecko.com/api/v3`
    - `COINGECKO_API_KEY` = `your_coingecko_api_key`

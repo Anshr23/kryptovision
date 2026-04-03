@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'CoinPulse',
-  description: 'Crypto Screener App with a built-in High-Frequency Terminal & Dashboard',
+  title: 'KryptoVision | Real-Time Crypto Analytics & Terminal',
+  description: 'High-Performance Cryptocurrency Screener & Real-Time Trading Terminal',
 };
 
 export default function RootLayout({
