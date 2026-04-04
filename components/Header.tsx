@@ -10,6 +10,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { SearchModal } from '@/components/SearchModel'
+import { CurrencyToggle } from '@/components/CurrencyToggle'
 
 
 const Header = () => {
@@ -35,6 +36,8 @@ const Header = () => {
           <Link href="/coins" className={cn('nav-link', {
             'is-active': pathname === '/coins',
           })}>All Coins</Link>
+
+          <CurrencyToggle className="ml-2" />
         </nav>
         </div>
     </header>

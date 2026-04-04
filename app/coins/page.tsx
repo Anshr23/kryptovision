@@ -2,6 +2,7 @@ import { fetcher } from '@/lib/coingecko.actions';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import FormattedPrice from '@/components/FormattedPrice';
 import { cn, formatPercentage, formatCurrency } from '@/lib/utils';
 import DataTable from '@/components/DataTable';
 import CoinsPagination from '@/components/CoinsPagination';
@@ -47,7 +48,7 @@ const Coins = async ({ searchParams }: NextPageProps) => {
     {
       header: 'Price',
       cellClassName: 'price-cell',
-      cell: (coin) => formatCurrency(coin.current_price),
+      cell: (coin) => <FormattedPrice amount={coin.current_price} />,
     },
     {
       header: '24h Change',
@@ -71,7 +72,7 @@ const Coins = async ({ searchParams }: NextPageProps) => {
     {
       header: 'Market Cap',
       cellClassName: 'market-cap-cell',
-      cell: (coin) => formatCurrency(coin.market_cap),
+      cell: (coin) => <FormattedPrice amount={coin.market_cap} digits={0} />,
     },
   ];
 

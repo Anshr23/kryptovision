@@ -1,5 +1,6 @@
 'use client';
 
+import FormattedPrice from '@/components/FormattedPrice';
 import { Separator } from '@/components/ui/separator';
 import CandlestickChart from '@/components/CandlestickChart';
 import { useCoinGeckoWebSocket } from '@/components/hooks/useCoinGeckoWebSocket';
@@ -16,7 +17,7 @@ const LiveDataWrapper = ({ children, coinId, poolId, coin, coinOHLCData }: LiveD
     {
       header: 'Price',
       cellClassName: 'price-cell',
-      cell: (trade) => (trade.price ? formatCurrency(trade.price) : '-'),
+      cell: (trade) => (trade.price ? <FormattedPrice amount={trade.price} /> : '-'),
     },
     {
       header: 'Amount',
@@ -26,7 +27,7 @@ const LiveDataWrapper = ({ children, coinId, poolId, coin, coinOHLCData }: LiveD
     {
       header: 'Value',
       cellClassName: 'value-cell',
-      cell: (trade) => (trade.value ? formatCurrency(trade.value) : '-'),
+      cell: (trade) => (trade.value ? <FormattedPrice amount={trade.value} /> : '-'),
     },
     {
       header: 'Buy/Sell',

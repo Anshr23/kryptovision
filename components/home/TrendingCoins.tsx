@@ -1,3 +1,4 @@
+import FormattedPrice from '@/components/FormattedPrice';
 import { fetcher } from '@/lib/coingecko.actions';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -55,7 +56,7 @@ const TrendingCoins = async () => {
     {
       header: 'Price',
       cellClassName: 'price-cell',
-      cell: (coin) => formatCurrency(coin.item.data.price),
+      cell: (coin) => <FormattedPrice amount={coin.item.data.price} />,
     },
   ];
 

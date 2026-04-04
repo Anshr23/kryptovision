@@ -1,9 +1,9 @@
 import React from 'react';
 import { fetcher } from '@/lib/coingecko.actions';
 import Image from 'next/image';
-import { formatCurrency } from '@/lib/utils';
-import { CoinOverviewFallback } from './fallback';
+import FormattedPrice from '@/components/FormattedPrice';
 import CandlestickChart from '@/components/CandlestickChart';
+import { CoinOverviewFallback } from './fallback';
 
 const CoinOverview = async () => {
   try {
@@ -24,7 +24,9 @@ const CoinOverview = async () => {
               <p>
                 {coin.name} / {coin.symbol.toUpperCase()}
               </p>
-              <h1>{formatCurrency(coin.market_data.current_price.usd)}</h1>
+              <h1>
+                <FormattedPrice amount={coin.market_data.current_price.usd} />
+              </h1>
             </div>
           </div>
         </CandlestickChart>

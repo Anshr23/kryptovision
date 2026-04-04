@@ -12,19 +12,25 @@ export function formatCurrency(
   currency?: string,
   showSymbol?: boolean,
 ) {
+  const curr = currency?.toUpperCase() || 'USD';
+  const locale = curr === 'INR' ? 'en-IN' : 'en-US';
+
   if (value === null || value === undefined || isNaN(value)) {
-    return showSymbol !== false ? '$0.00' : '0.00';
+    if (showSymbol !== false) {
+      return curr === 'INR' ? '₹0.00' : '$0.00';
+    }
+    return '0.00';
   }
 
   if (showSymbol === undefined || showSymbol === true) {
-    return value.toLocaleString(undefined, {
+    return value.toLocaleString(locale, {
       style: 'currency',
-      currency: currency?.toUpperCase() || 'USD',
+      currency: curr,
       minimumFractionDigits: digits ?? 2,
       maximumFractionDigits: digits ?? 2,
     });
   }
-  return value.toLocaleString(undefined, {
+  return value.toLocaleString(locale, {
     minimumFractionDigits: digits ?? 2,
     maximumFractionDigits: digits ?? 2,
   });
