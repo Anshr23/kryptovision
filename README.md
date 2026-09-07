@@ -1,86 +1,136 @@
-# KryptoVision 👁️⚡ — Crypto Screener & Real-Time Trading Terminal
+# KryptoVision - Real-Time Crypto Analytics & Trading Terminal
 
-**KryptoVision** is a high-frequency cryptocurrency screening application and live market terminal built with Next.js 15 (App Router), React 19, TypeScript, TailwindCSS, and Lightweight-Charts. It features interactive technical candlestick charts, instant token search, currency conversion, and real-time live price and order book streaming.
+<p align="center">
+  <img src="./public/logo1.png" alt="KryptoVision Logo" width="160" />
+</p>
 
----
+KryptoVision is a high-performance, state-of-the-art cryptocurrency screening and real-time trading terminal built with Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS. It features interactive TradingView candlestick charts, a **Dual-Engine Real-Time WebSocket Streaming System** (CoinGecko Pro & Binance fallback), live multi-currency (USD/INR) price formatting, DEX liquidity pool tracking, and an instant command palette search modal.
 
-## 🚀 Features
-
-- **📈 Real-Time Candlestick Charts**: High-performance interactive trading charts powered by `lightweight-charts`.
-- **⚡ Live Streaming Data**: Real-time ticker price updates, recent order book trade history, and streaming candlestick updates via WebSockets.
-- **🔍 Instant Command Palette Search (`⌘K`)**: Quick token lookup powered by SWR and CoinGecko search APIs.
-- **💱 Live Crypto Converter**: Instant multi-currency crypto-to-fiat conversion tool.
-- **📊 Comprehensive Coins Directory**: Paginated directory of cryptocurrency market rankings, 24h price changes, market caps, and market metrics.
-- **🛡️ Secure Backend Architecture**: Built-in Server Actions isolate sensitive API credentials from the client browser.
+**Live Demo:** [KryptoVision](https://kryptovision.vercel.app)
 
 ---
 
-## 🛠️ Tech Stack
+## Screenshots
 
-- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS & Shadcn/UI primitives
-- **Data Fetching**: Next.js Server Actions & [SWR](https://swr.vercel.app/)
-- **Market Data APIs**: CoinGecko Demo REST API & Binance Public WebSocket API
-- **Charts**: `lightweight-charts` by TradingView
+### User Experience & Real-Time Dashboard
+![Landing Page](./public/home.png)
 
----
-
-## 📂 Architecture Overview (For MERN Developers)
-
-In traditional **MERN** applications, frontend (React) and backend (Express API server) are separate codebases running on different ports. 
-
-In **Next.js Fullstack Architecture**, both frontend and backend exist in a unified project:
-
-- **Server-Side Backend (`'use server'`)**:
-  - Located in [`lib/coingecko.actions.ts`](file:///Users/anshrai/Desktop/repo/Crypto-Trading/lib/coingecko.actions.ts).
-  - Server Actions execute **strictly on the Node.js server**. They use your `COINGECKO_API_KEY` to fetch data from CoinGecko without ever exposing API keys to client browsers.
-- **Client-Side UI (`'use client'`)**:
-  - Interactive components like [`SearchModel.tsx`](file:///Users/anshrai/Desktop/repo/Crypto-Trading/components/SearchModel.tsx), [`Converter.tsx`](file:///Users/anshrai/Desktop/repo/Crypto-Trading/components/Converter.tsx), and [`useCoinGeckoWebSocket.ts`](file:///Users/anshrai/Desktop/repo/Crypto-Trading/components/hooks/useCoinGeckoWebSocket.ts) run in the browser to handle user input, state, and live WebSocket connections.
+### Cryptocurrency Screener & Market Rankings
+![All Coins Directory](./public/allcoinspage.png)
 
 ---
 
-## ⚙️ Environment Variables
+## Key Features
+
+- **Dual-Engine WebSocket Streaming**: Live 1s/1m price ticker updates, recent order book trade streams, and candlestick updates via CoinGecko Pro with an automatic failover to Binance Public WebSockets.
+- **Interactive Technical Candlestick Charts**: Canvas-rendered financial charts powered by TradingView `lightweight-charts` with period controls (1D, 1W, 1M, 3M, 6M, 1Y, Max) and responsive auto-scaling.
+- **Global USD & INR Currency Switcher**: Real-time currency toggle persisting user preferences in `localStorage` and fetching live exchange rates for instant price conversions across all metrics.
+- **Command Palette Quick Search (`⌘K`)**: Fast modal search powered by `cmdk` and SWR, providing instant token autocomplete and trending coins recommendations.
+- **DEX Pool & On-Chain Tracking**: Automatic detection of DEX liquidity pools and contract addresses via GeckoTerminal API for accurate token charting.
+- **Instant Multi-Currency Converter**: Interactive crypto-to-fiat and crypto-to-crypto converter supporting dozens of global currencies.
+- **Secure Full-Stack Next.js Architecture**: Server Actions isolate sensitive CoinGecko API keys on Node.js runtime to prevent client-side credential exposure.
+
+---
+
+## System Architecture
+
+```
+User Browser (React 19 / Client Components)
+   │
+   ├──────► [Next.js Server Actions Layer ('use server')] ──► [CoinGecko REST API]
+   │           └─ Encapsulates API keys & handles data fetching
+   │
+   └──────► [Dual-Engine Real-Time WebSocket Hook]
+               │
+               ├──► [Primary: CoinGecko Pro WebSocket] (Requires API Key)
+               │       └─ Stream: SimplePrice / OnchainTrade / OnchainOHLCV
+               │
+               └──► [Fallback: Binance Public WebSocket] (Zero Key Required)
+                       └─ Stream: @ticker / @trade / @kline_1s / @kline_1m
+```
+
+---
+
+## Tech Stack
+
+### Frontend & UI
+- **Next.js 16** (App Router & Turbopack)
+- **React 19** with **TypeScript**
+- **Tailwind CSS v4** & **Shadcn UI** primitives
+- **TradingView `lightweight-charts` v5**
+- **cmdk** & **Lucide React** icons
+
+### Data Fetching & Real-Time Engine
+- **Next.js Server Actions** (`'use server'`)
+- **SWR** (Stale-While-Revalidate caching)
+- **Native WebSocket API** (CoinGecko Pro WS + Binance Public Stream WS)
+- **Query-String** & **Open Exchange Rates API**
+
+---
+
+## Setup & Installation
+
+### Prerequisites
+- Node.js (v20 or higher)
+- npm or pnpm
+- (Optional) CoinGecko API key for pro features (falls back to Binance public stream automatically)
+
+---
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Anshr23/Crypto-Trading.git
+cd Crypto-Trading
+```
+
+---
+
+### 2. Environment Configuration
 
 Create a `.env.local` file in the root directory:
 
 ```env
-# Server-side environment variables (Hidden from browser)
+# Server-Side API Variables (Hidden from browser)
 COINGECKO_BASE_URL=https://api.coingecko.com/api/v3
 COINGECKO_API_KEY=your_coingecko_api_key_here
 
-# Client-side environment variables (Optional - auto-falls back to Binance Free WebSocket)
-NEXT_PUBLIC_COINGECKO_API_KEY=
+# Client-Side WebSocket Variables (Optional - Auto-falls back to Binance Free WebSocket)
+NEXT_PUBLIC_COINGECKO_API_KEY=your_public_coingecko_key
 NEXT_PUBLIC_COINGECKO_WEBSOCKET_URL=wss://stream.coingecko.com/v1
 ```
 
 ---
 
-## 🌐 Deploying to Vercel
+### 3. Local Development Startup
 
-The recommended platform to deploy Next.js applications is **Vercel** (the creators of Next.js).
+```bash
+# Install dependencies
+npm install
 
-### Step-by-Step Deployment:
+# Run the dev server
+npm run dev
+```
 
-1. **Push your code to GitHub / GitLab / Bitbucket**.
-2. Go to [Vercel](https://vercel.com) and click **Add New Project**.
-3. Import your `kryptovision` repository.
-4. In the **Environment Variables** section, add:
-   - `COINGECKO_BASE_URL` = `https://api.coingecko.com/api/v3`
-   - `COINGECKO_API_KEY` = `your_coingecko_api_key`
-5. Click **Deploy**. Vercel will build and deploy your project automatically in under 1 minute!
+Open `http://localhost:3000` in your browser.
 
 ---
 
-## 💻 Local Development Setup
+## Server Actions & API Services
 
-```bash
-# 1. Install dependencies
-npm install
+### CoinGecko Actions (`lib/coingecko.actions.ts`)
+- `fetcher<T>(endpoint, params)` — Generic server action wrapper for authenticated CoinGecko REST calls.
+- `getPools(id, network, contractAddress)` — Retrieves DEX liquidity pool data from GeckoTerminal.
+- `searchCoins(query)` — Handles server-side coin autocomplete queries.
+- `getTrendingCoins()` — Fetches top trending crypto assets (cached for 300s).
 
-# 2. Run the development server
-npm run dev
+### Real-Time WebSocket Hook (`components/hooks/useCoinGeckoWebSocket.ts`)
+- Primary WebSocket connection to CoinGecko Pro WS (`C1` price, `G2` trade, `G3` candle streams).
+- Fallback connection to Binance stream (`@ticker`, `@trade`, `@kline_1s`, `@kline_1m`).
 
-# 3. Open local server
-# Navigate to http://localhost:3000 in your browser
-```
+---
+
+## License
+
+Distributed under the MIT License.
+
